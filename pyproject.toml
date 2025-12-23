@@ -8,7 +8,7 @@ description = "Turn HTML into equivalent Markdown-structured text."
 readme = "README.md"
 authors = [{name = "Aaron Swartz", email = "me@aaronsw.com"}]
 maintainers = [{name = "Alireza Savand", email = "alireza.savand@gmail.com"}]
-license = "GPL-3.0-or-later"
+license = {text = "GPL-3.0-or-later"}
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
@@ -27,6 +27,21 @@ classifiers = [
 urls = {Homepage = "https://github.com/Alir3z4/html2text/"}
 requires-python = ">=3.9"
 dynamic = ["version"]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-cov>=4.1.0",
+    "mypy>=1.8.0",
+    "black>=24.0.0",
+    "flake8>=7.0.0",
+    "flake8-pyproject>=1.2.3",
+    "isort>=5.13.0",
+]
+docs = [
+    "mkdocs>=1.5.0",
+    "mkdocs-material>=9.5.0",
+]
 
 [project.scripts]
 html2text = "html2text.cli:main"
@@ -63,3 +78,28 @@ extend_skip = ["html2text/_version.py"]
 
 [tool.mypy]
 python_version = "3.9"
+
+[tool.uv]
+dev-dependencies = [
+    "pytest>=8.0.0",
+    "pytest-cov>=4.1.0",
+    "mypy>=1.8.0",
+    "black>=24.0.0",
+    "flake8>=7.0.0",
+    "flake8-pyproject>=1.2.3",
+    "isort>=5.13.0",
+]
+
+[tool.uv.sources]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = [
+    "--cov=html2text",
+    "--cov-report=html",
+    "--cov-report=term-missing",
+    "--cov-report=xml",
+]

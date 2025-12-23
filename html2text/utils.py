@@ -201,6 +201,9 @@ def skipwrap(
     # don't wrap
     if para[0:4] == "    " or para[0] == "\t":
         return True
+    # If the text begins with an iframe tag (HTML embed), don't wrap
+    if para.strip().startswith("<iframe"):
+        return True
 
     # If the text begins with only two "--", possibly preceded by
     # whitespace, that's an emdash; so wrap.

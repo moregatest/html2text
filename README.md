@@ -62,36 +62,82 @@ Hello, [world](https://www.google.com/earth/)!
 `html2text` is available on pypi
 https://pypi.org/project/html2text/
 
+### Using pip
+
 ```shell
 $ pip install html2text
 ```
 
-##  Development
+### Using uv (recommended)
+
+[uv](https://github.com/astral-sh/uv) is a fast Python package installer and resolver.
+
+```shell
+$ uv pip install html2text
+```
+
+Or add to your project:
+
+```shell
+$ uv add html2text
+```
+
+## Development
+
+This project uses [uv](https://github.com/astral-sh/uv) for dependency management.
+
+### Setup development environment
+
+```shell
+# Install uv if you haven't already
+$ pip install uv
+
+# Sync dependencies (creates virtual environment and installs all dependencies)
+$ uv sync
+
+# Activate the virtual environment
+$ source .venv/bin/activate  # On Unix/macOS
+# or
+$ .venv\Scripts\activate  # On Windows
+```
 
 ### How to run unit tests
 
 ```shell
+# Using uv (recommended)
+$ uv run pytest
+
+# Or with tox
 $ tox
 ```
 
 To see the coverage results:
 
 ```shell
-$ coverage html
+$ uv run pytest --cov=html2text --cov-report=html
 ```
 
 then open the `./htmlcov/index.html` file in your browser.
 
+### Code Quality & Linting
 
-### Code Quality & Pre Commit
+Run individual linters:
 
-The CI runs several linting steps, including:
+```shell
+# Black (code formatting)
+$ uv run black .
 
-- mypy
-- Flake8
-- Black
+# isort (import sorting)
+$ uv run isort .
 
-To make sure the code passes the CI linting steps, run:
+# Flake8 (code linting)
+$ uv run flake8
+
+# mypy (type checking)
+$ uv run mypy --strict html2text
+```
+
+Or run all checks with tox:
 
 ```shell
 $ tox -e pre-commit

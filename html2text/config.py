@@ -167,3 +167,6 @@ CLOSE_QUOTE = '"'
 
 # Include the <sup> and <sub> tags
 INCLUDE_SUP_SUB = False
+
+# Preserve YouTube iframe embeds as HTML in markdown
+PRESERVE_YOUTUBE_EMBEDS = True

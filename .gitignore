@@ -1,17 +1,30 @@
 /html2text/_version.py
 
+# Python artifacts
 *.py[co]
 *.bak
 build
 dist
 *.egg-info
+
+# IDEs
 .idea
+.c9/
+.vscode
+
+# Testing & Coverage
 .coverage
 .coverage.*
 coverage.xml
-env/
-.c9/
-.vscode
-.tox/
 htmlcov/
+.pytest_cache/
+.tox/
 .mypy_cache/
+
+# Virtual environments
+env/
+venv/
+.venv/
+
+# uv
+.python-version

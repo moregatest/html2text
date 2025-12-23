@@ -3,4 +3,6 @@ include README.md
 include ChangeLog.rst
 include AUTHORS.rst
 include tox.ini
-recursive-include test *.html *.md *.py
+recursive-include tests *.html *.md *.py
+recursive-include docs *.md *.rst
+recursive-include examples *.py

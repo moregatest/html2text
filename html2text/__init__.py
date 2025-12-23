@@ -89,6 +89,7 @@ class HTML2Text(html.parser.HTMLParser):
         self.open_quote = config.OPEN_QUOTE  # covered in cli
         self.close_quote = config.CLOSE_QUOTE  # covered in cli
         self.include_sup_sub = config.INCLUDE_SUP_SUB  # covered in cli
+        self.preserve_youtube_embeds = config.PRESERVE_YOUTUBE_EMBEDS
 
         if out is None:
             self.out = self.outtextf
@@ -137,6 +138,7 @@ class HTML2Text(html.parser.HTMLParser):
         self.preceding_stressed = False
         self.preceding_data = ""
         self.current_tag = ""
+        self.youtube_iframe_attrs: Optional[Dict[str, Optional[str]]] = None
 
         config.UNIFIABLE["nbsp"] = "&nbsp_place_holder;"
 
@@ -735,6 +737,29 @@ class HTML2Text(html.parser.HTMLParser):
                 self.o("<{}>".format(tag))
             else:
                 self.o("</{}>".format(tag))
+
+        if tag == "iframe" and self.preserve_youtube_embeds:
+            if start:
+                # Check if this is a YouTube embed
+                src = attrs.get("src", "")
+                if src and ("youtube.com" in src or "youtu.be" in src):
+                    self.youtube_iframe_attrs = attrs
+                    # Build the complete iframe HTML tag on a single line
+                    self.p()
+                    iframe_html = "<iframe"
+                    for key, value in attrs.items():
+                        if value is not None:
+                            iframe_html += ' {}="{}"'.format(key, value)
+                        else:
+                            iframe_html += ' {}'.format(key)
+                    iframe_html += "></iframe>"
+                    self.o(iframe_html)
+                    self.p()
+                    self.youtube_iframe_attrs = None
+            else:
+                # If we didn't output the iframe in the start tag handler,
+                # we don't need to do anything here
+                pass
 
     # TODO: Add docstring for these one letter functions
     def pbr(self) -> None:
