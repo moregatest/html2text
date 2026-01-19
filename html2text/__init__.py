@@ -741,7 +741,8 @@ class HTML2Text(html.parser.HTMLParser):
         if tag == "iframe" and self.preserve_youtube_embeds:
             if start:
                 # Check if this is a YouTube embed
-                src = attrs.get("src", "")
+                # Support both 'src' and 'data-src' (lazy loading)
+                src = attrs.get("src", "") or attrs.get("data-src", "")
                 if src and ("youtube.com" in src or "youtu.be" in src):
                     self.youtube_iframe_attrs = attrs
                     # Build the complete iframe HTML tag on a single line
